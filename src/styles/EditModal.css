@@ -1,0 +1,111 @@
+/* پس‌زمینه‌ی نیمه‌شفاف کل صفحه */
+.edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* جعبه‌ی مودال شیشه‌ای */
+.edit-modal {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 420px;
+  color: #fff;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* انیمیشن ورود نرم */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* تیتر مودال */
+.edit-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+/* ورودی‌ها */
+.edit-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.edit-form label {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #e3e3e3;
+}
+
+.edit-form input {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.edit-form input:focus {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: #fff;
+}
+
+/* دکمه‌ها */
+.edit-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.btn.cancel {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.btn.cancel:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn.save {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+}
+
+.btn.save:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+}

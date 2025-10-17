@@ -1,0 +1,67 @@
+/* کل صفحه تار می‌شود */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* خود جعبه مدال */
+.modal-box {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+/* عنوان */
+.modal-title {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* دکمه‌ها */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* دکمه لغو */
+.btn.cancel {
+  background-color: #ddd;
+}
+
+.btn.cancel:hover {
+  background-color: #ccc;
+}
+
+/* دکمه حذف */
+.btn.delete {
+  background-color: #e63946;
+  color: #fff;
+}
+
+.btn.delete:hover {
+  background-color: #c1121f;
+}
