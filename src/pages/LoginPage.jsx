@@ -13,6 +13,8 @@ function LoginPage() {
     if (token) {
       navigate("/products", { replace: true }); // کاربر لاگین کرده -> مستقیم به محصولات
     }
+
+    
   }, [navigate]);
 
   const changeHandler = (event) => {

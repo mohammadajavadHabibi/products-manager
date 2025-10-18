@@ -10,7 +10,6 @@ import api from "../configs/Api";
 import { useProduct } from "../context/ProductsContext";
 import Loader from "../components/Loader";
 
-
 function ProductsPage() {
   const [state, dispatch] = useProduct();
   const {
@@ -25,7 +24,6 @@ function ProductsPage() {
     showDeleteModal,
   } = state;
 
- 
   const fetchProducts = async () => {
     dispatch({ type: "SET_LOADING", payload: true });
     dispatch({ type: "SET_ERROR", payload: "" });
@@ -54,9 +52,13 @@ function ProductsPage() {
       dispatch({ type: "SET_FILTER", payload: products });
       return;
     }
-    const filtered = products.filter((p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const filtered = products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.id.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     dispatch({ type: "SET_FILTER", payload: filtered });
   }, [searchTerm, products]);
 
@@ -71,7 +73,7 @@ function ProductsPage() {
     dispatch({ type: "SET_SHOW_DELETE_MODAL", payload: true });
   };
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   if (error) return <p className="status-text error">{error}</p>;
 
   return (
@@ -100,6 +102,7 @@ function ProductsPage() {
               <th>نام محصول</th>
               <th>قیمت</th>
               <th>تعداد</th>
+              <th>شناسه محصول</th> {/* اضافه شد */}
               <th>عملیات</th>
             </tr>
           </thead>
@@ -109,6 +112,7 @@ function ProductsPage() {
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
+                <td>{product.id}</td> {/* نمایش شناسه */}
                 <td className="actions-cell">
                   <button
                     className="icon-link edit"
