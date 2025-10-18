@@ -6,9 +6,10 @@ import DeleteModal from "../modals/DeleteModal";
 import EditModal from "../modals/EditModal";
 import AddModal from "../modals/AddModal";
 import SearchBox from "../components/SearchBox";
-import api from "../configs/Api";
+
 import { useProduct } from "../context/ProductsContext";
 import Loader from "../components/Loader";
+import fetchProducts from "../utils/fetchproducts";
 
 function ProductsPage() {
   const [state, dispatch] = useProduct();
@@ -24,27 +25,9 @@ function ProductsPage() {
     showDeleteModal,
   } = state;
 
-  const fetchProducts = async () => {
-    dispatch({ type: "SET_LOADING", payload: true });
-    dispatch({ type: "SET_ERROR", payload: "" });
-
-    try {
-      const res = await api.get("/products");
-      dispatch({ type: "SET_PRODUCTS", payload: res.data });
-      dispatch({ type: "SET_FILTER", payload: res.data });
-    } catch (err) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: err.message || "خطا در دریافت محصولات",
-      });
-    } finally {
-      dispatch({ type: "SET_LOADING", payload: false });
-    }
-  };
-
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProducts(dispatch);
+  }, [dispatch]);
 
   // جستجو
   useEffect(() => {
