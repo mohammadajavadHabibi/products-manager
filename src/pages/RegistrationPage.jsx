@@ -12,7 +12,8 @@ function RegistrationPage() {
 
   const navigate = useNavigate();
 
-  const { mutate } = useRegister(yconst changeHandler = (event) => {
+  const { mutate } = useRegister();
+  const changeHandler = (event) => {
     setForm((form) => ({ ...form, [event.target.name]: event.target.value }));
   };
 
