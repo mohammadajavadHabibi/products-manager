@@ -85,28 +85,23 @@ function ProductsPage() {
               <th>نام محصول</th>
               <th>قیمت</th>
               <th>تعداد</th>
-              <th>شناسه محصول</th> {/* اضافه شد */}
+              <th>شناسه محصول</th>
               <th>عملیات</th>
             </tr>
           </thead>
+
           <tbody>
             {filterProducts.map((product) => (
               <tr key={product.id}>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
-                <td>{product.id}</td> {/* نمایش شناسه */}
+                <td>{product.id}</td>
                 <td className="actions-cell">
-                  <button
-                    className="icon-link edit"
-                    onClick={() => handleEdit(product.id)}
-                  >
+                  <button onClick={() => handleEdit(product.id)}>
                     <FaRegPenToSquare />
                   </button>
-                  <button
-                    className="icon-link delete"
-                    onClick={() => handleDelete(product.id)}
-                  >
+                  <button onClick={() => handleDelete(product.id)}>
                     <AiTwotoneDelete />
                   </button>
                 </td>

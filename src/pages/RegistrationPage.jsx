@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
+import { useRegister } from "../services/mutaitions";
 
 function RegistrationPage() {
   const [form, setForm] = useState({
@@ -11,15 +12,7 @@ function RegistrationPage() {
 
   const navigate = useNavigate();
 
-  // بررسی لاگین بودن کاربر هنگام ورود به صفحه
-  useEffect(() => {
-    const token = getCookie("token");
-    if (token) {
-      navigate("/products", { replace: true }); // کاربر لاگین کرده -> مستقیم به محصولات
-    }
-  }, [navigate]);
-
-  const changeHandler = (event) => {
+  const { mutate } = useRegister(yconst changeHandler = (event) => {
     setForm((form) => ({ ...form, [event.target.name]: event.target.value }));
   };
 
@@ -32,7 +25,19 @@ function RegistrationPage() {
     if (password !== confirmPassword)
       return alert("Passwords aren't the same!");
 
-    navigate("/login"); // بعد از ثبت‌نام به صفحه لاگین می‌ره
+    mutate(
+      { username, password },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          navigate("/login"); // بعد از ثبت‌نام به صفحه لاگین می‌ره
+        },
+
+        onError: (error) => {
+          console.log(error.message);
+        },
+      }
+    );
   };
 
   return (
