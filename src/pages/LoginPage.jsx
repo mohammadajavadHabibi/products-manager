@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import api from "../configs/Api";
-import { setCookie, getCookie } from "../utils/cookie";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../utils/cookie";
 import { useLogin } from "../services/mutaitions";
 
-function LoginPage() {
+function LoginPage({ setToken }) {
   const [form, setForm] = useState({ username: "", password: "" });
   const navigate = useNavigate();
   const { mutate } = useLogin();
@@ -17,17 +16,15 @@ function LoginPage() {
     event.preventDefault();
     const { username, password } = form;
 
-    if (!username || !password)
-      return alert("Username and Password is Necessary!");
+    if (!username || !password) return alert("Username and Password is Necessary!");
 
     mutate(
       { username, password },
       {
         onSuccess: (data) => {
-          setCookie("token", data?.token);
-          navigate("/products");
+          setCookie("token", data?.token);  // ذخیره توکن
+          setToken(data?.token);           // بروزرسانی state توکن → هدایت خودکار
         },
-
         onError: (error) => {
           console.log(error);
         },

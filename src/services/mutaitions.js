@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import api from "../configs/Api";
-import { data } from "react-router-dom";
+
 
 const useRegister = () => {
   return useMutation({

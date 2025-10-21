@@ -10,6 +10,7 @@ import SearchBox from "../components/SearchBox";
 import { useProduct } from "../context/ProductsContext";
 import Loader from "../components/Loader";
 import fetchProducts from "../utils/fetchproducts";
+import { showModal, updateProductsAndFilter } from "../utils/helper";
 
 function ProductsPage() {
   const [state, dispatch] = useProduct();
@@ -24,12 +25,10 @@ function ProductsPage() {
     showDeleteModal,
   } = state;
 
-  // فراخوانی اولیه محصولات
   useEffect(() => {
     fetchProducts(dispatch);
   }, [dispatch]);
 
-  // محصولات فیلتر شده با useMemo
   const filteredProducts = useMemo(() => {
     if (!searchTerm) return products;
     return products.filter(
@@ -38,18 +37,6 @@ function ProductsPage() {
         p.id.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [products, searchTerm]);
-
-  // helper برای آپدیت محصولات و فیلتر
-  const updateProductsAndFilter = (newProducts) => {
-    dispatch({ type: "SET_PRODUCTS", payload: newProducts });
-    dispatch({ type: "SET_FILTER", payload: newProducts });
-  };
-
-  // helper برای باز کردن مودال‌ها
-  const showModal = (type, id = null) => {
-    if (id) dispatch({ type: "SET_SELECTED_ID", payload: id });
-    dispatch({ type: `SET_SHOW_${type}_MODAL`, payload: true });
-  };
 
   if (loading) return <Loader />;
   if (error) return <p className="status-text error">{error}</p>;
@@ -65,7 +52,7 @@ function ProductsPage() {
             dispatch({ type: "SET_SEARCH_TERM", payload: value })
           }
         />
-        <button className="add-btn" onClick={() => showModal("ADD")}>
+        <button className="add-btn" onClick={() => showModal("ADD", dispatch)}>
           افزودن محصول
         </button>
       </div>
@@ -91,10 +78,14 @@ function ProductsPage() {
                 <td>{product.quantity}</td>
                 <td>{product.id}</td>
                 <td className="actions-cell">
-                  <button onClick={() => showModal("EDIT", product.id)}>
+                  <button
+                    onClick={() => showModal("EDIT", dispatch, product.id)}
+                  >
                     <FaRegPenToSquare />
                   </button>
-                  <button onClick={() => showModal("DELETE", product.id)}>
+                  <button
+                    onClick={() => showModal("DELETE", dispatch, product.id)}
+                  >
                     <AiTwotoneDelete />
                   </button>
                 </td>
@@ -110,7 +101,7 @@ function ProductsPage() {
             dispatch({ type: "SET_SHOW_ADD_MODAL", payload: false })
           }
           onAddSuccess={(newProduct) =>
-            updateProductsAndFilter([...products, newProduct])
+            updateProductsAndFilter([...products, newProduct], dispatch)
           }
         />
       )}
@@ -125,7 +116,8 @@ function ProductsPage() {
             updateProductsAndFilter(
               products.map((p) =>
                 p.id === updatedProduct.id ? updatedProduct : p
-              )
+              ),
+              dispatch
             )
           }
         />
@@ -138,7 +130,10 @@ function ProductsPage() {
             dispatch({ type: "SET_SHOW_DELETE_MODAL", payload: false })
           }
           updateProducts={(id) =>
-            updateProductsAndFilter(products.filter((p) => p.id !== id))
+            updateProductsAndFilter(
+              products.filter((p) => p.id !== id),
+              dispatch
+            )
           }
         />
       )}

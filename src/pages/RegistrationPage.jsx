@@ -35,7 +35,15 @@ function RegistrationPage() {
         },
 
         onError: (error) => {
-          console.log(error.message);
+          if (
+            error?.response?.status === 400 ||
+            error?.response?.status === 409
+          ) {
+            navigate("/login");
+          } else {
+            alert("خطایی رخ داد. لطفاً دوباره تلاش کنید.");
+            console.log(error);
+          }
         },
       }
     );
